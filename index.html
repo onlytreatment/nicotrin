@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head><meta charset="UTF-8"><script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(e){this.triggerEvents=e,this.eventOptions={passive:!0},this.userEventListener=this.triggerListener.bind(this),this.delayedScripts={normal:[],async:[],defer:[]},this.allJQueries=[]}_addUserInteractionListener(e){this.triggerEvents.forEach((t=>window.addEventListener(t,e.userEventListener,e.eventOptions)))}_removeUserInteractionListener(e){this.triggerEvents.forEach((t=>window.removeEventListener(t,e.userEventListener,e.eventOptions)))}triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}async _loadEverythingNow(){this._delayEventListeners(),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async),await this._triggerDOMContentLoaded(),await this._triggerWindowLoad(),window.dispatchEvent(new Event("rocket-allScriptsLoaded"))}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((e=>{e.hasAttribute("src")?e.hasAttribute("async")&&!1!==e.async?this.delayedScripts.async.push(e):e.hasAttribute("defer")&&!1!==e.defer||"module"===e.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(e):this.delayedScripts.normal.push(e):this.delayedScripts.normal.push(e)}))}async _transformScript(e){return await this._requestAnimFrame(),new Promise((t=>{const n=document.createElement("script");let r;[...e.attributes].forEach((e=>{let t=e.nodeName;"type"!==t&&("data-rocket-type"===t&&(t="type",r=e.nodeValue),n.setAttribute(t,e.nodeValue))})),e.hasAttribute("src")?(n.addEventListener("load",t),n.addEventListener("error",t)):(n.text=e.text,t()),e.parentNode.replaceChild(n,e)}))}async _loadScriptsFromList(e){const t=e.shift();return t?(await this._transformScript(t),this._loadScriptsFromList(e)):Promise.resolve()}_preloadAllScripts(){var e=document.createDocumentFragment();[...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async].forEach((t=>{const n=t.getAttribute("src");if(n){const t=document.createElement("link");t.href=n,t.rel="preload",t.as="script",e.appendChild(t)}})),document.head.appendChild(e)}_delayEventListeners(){let e={};function t(t,n){!function(t){function n(n){return e[t].eventsToRewrite.indexOf(n)>=0?"rocket-"+n:n}e[t]||(e[t]={originalFunctions:{add:t.addEventListener,remove:t.removeEventListener},eventsToRewrite:[]},t.addEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.add.apply(t,arguments)},t.removeEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.remove.apply(t,arguments)})}(t),e[t].eventsToRewrite.push(n)}function n(e,t){let n=e[t];Object.defineProperty(e,t,{get:()=>n||function(){},set(r){e["rocket"+t]=n=r}})}t(document,"DOMContentLoaded"),t(window,"DOMContentLoaded"),t(window,"load"),t(window,"pageshow"),t(document,"readystatechange"),n(document,"onreadystatechange"),n(window,"onload"),n(window,"onpageshow")}_delayJQueryReady(e){let t=window.jQuery;Object.defineProperty(window,"jQuery",{get:()=>t,set(n){if(n&&n.fn&&!e.allJQueries.includes(n)){n.fn.ready=n.fn.init.prototype.ready=function(t){e.domReadyFired?t.bind(document)(n):document.addEventListener("rocket-DOMContentLoaded",(()=>t.bind(document)(n)))};const t=n.fn.on;n.fn.on=n.fn.init.prototype.on=function(){if(this[0]===window){function e(e){return e.split(" ").map((e=>"load"===e||0===e.indexOf("load.")?"rocket-jquery-load":e)).join(" ")}"string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=e(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach((t=>{delete Object.assign(arguments[0],{[e(t)]:arguments[0][t]})[t]}))}return t.apply(this,arguments),this},e.allJQueries.push(n)}t=n}})}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._requestAnimFrame(),document.rocketonreadystatechange&&document.rocketonreadystatechange()}async _triggerWindowLoad(){await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-load")),await this._requestAnimFrame(),window.rocketonload&&window.rocketonload(),await this._requestAnimFrame(),this.allJQueries.forEach((e=>e(window).trigger("rocket-jquery-load"))),window.dispatchEvent(new Event("rocket-pageshow")),await this._requestAnimFrame(),window.rocketonpageshow&&window.rocketonpageshow()}_handleDocumentWrite(){const e=new Map;document.write=document.writeln=function(t){const n=document.currentScript,r=document.createRange(),i=n.parentElement;let o=e.get(n);void 0===o&&(o=n.nextSibling,e.set(n,o));const a=document.createDocumentFragment();r.setStart(a,0),a.appendChild(r.createContextualFragment(t)),i.insertBefore(a,o)}}async _requestAnimFrame(){return new Promise((e=>requestAnimationFrame(e)))}static run(){const e=new RocketLazyLoadScripts(["keydown","mousemove","touchmove","touchstart","touchend","wheel"]);e._addUserInteractionListener(e)}}RocketLazyLoadScripts.run();</script>
+	
+		<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- This site is optimized with the Yoast SEO plugin v17.8 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Nicotrin - Site Oficial</title><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto%20Slab%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRubik%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CMontserrat%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;display=swap" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto%20Slab%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRubik%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CMontserrat%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;display=swap" media="print" onload="this.media='all'" /><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto%20Slab%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRubik%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CMontserrat%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;display=swap" /></noscript><link rel="stylesheet" href="https://nicotrin.com/wp-content/cache/min/1/1386b023b30348d8a38ef675d34c9e64.css" media="all" data-minify="1" />
+	<meta name="description" content="Poderoso Tratamento Natural Para Eliminar o Vício do Cigarro de Forma Rápida e Definitiva. Últimas Unidades Disponíveis. Adquira Já." />
+	<link rel="canonical" href="https://nicotrin.com/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="Nicotrin - Site Oficial" />
+	<meta property="og:description" content="Poderoso Tratamento Natural Para Eliminar o Vício do Cigarro de Forma Rápida e Definitiva. Últimas Unidades Disponíveis. Adquira Já." />
+	<meta property="og:url" content="https://nicotrin.com/" />
+	<meta property="og:site_name" content="NICOTRIN - SITE OFICIAL" />
+	<meta property="article:modified_time" content="2022-03-18T21:52:51+00:00" />
+	<meta property="og:image" content="https://nicotrin.com/wp-content/uploads/2021/12/trioinclnado-min.png" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:label1" content="Est. reading time" />
+	<meta name="twitter:data1" content="11 minutes" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://nicotrin.com/#website","url":"https://nicotrin.com/","name":"NICOTRIN - SITE OFICIAL","description":"","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://nicotrin.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"ImageObject","@id":"https://nicotrin.com/#primaryimage","inLanguage":"en-US","url":"https://nicotrin.com/wp-content/uploads/2021/12/trioinclnado-min.png","contentUrl":"https://nicotrin.com/wp-content/uploads/2021/12/trioinclnado-min.png","width":448,"height":417},{"@type":"WebPage","@id":"https://nicotrin.com/#webpage","url":"https://nicotrin.com/","name":"Nicotrin - Site Oficial","isPartOf":{"@id":"https://nicotrin.com/#website"},"primaryImageOfPage":{"@id":"https://nicotrin.com/#primaryimage"},"datePublished":"2022-03-03T17:40:13+00:00","dateModified":"2022-03-18T21:52:51+00:00","description":"Poderoso Tratamento Natural Para Eliminar o V\u00edcio do Cigarro de Forma R\u00e1pida e Definitiva. \u00daltimas Unidades Dispon\u00edveis. Adquira J\u00e1.","breadcrumb":{"@id":"https://nicotrin.com/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://nicotrin.com/"]}]},{"@type":"BreadcrumbList","@id":"https://nicotrin.com/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home"}]}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
+<link rel="alternate" type="application/rss+xml" title="NICOTRIN - SITE OFICIAL &raquo; Feed" href="https://nicotrin.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="NICOTRIN - SITE OFICIAL &raquo; Comments Feed" href="https://nicotrin.com/comments/feed/" />
+<style>
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 0.07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	
+<style id='wp-block-library-theme-inline-css'>
+.wp-block-audio figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-audio figcaption{color:hsla(0,0%,100%,.65)}.wp-block-code>code{font-family:Menlo,Consolas,monaco,monospace;color:#1e1e1e;padding:.8em 1em;border:1px solid #ddd;border-radius:4px}.wp-block-embed figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-embed figcaption{color:hsla(0,0%,100%,.65)}.blocks-gallery-caption{color:#555;font-size:13px;text-align:center}.is-dark-theme .blocks-gallery-caption{color:hsla(0,0%,100%,.65)}.wp-block-image figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-image figcaption{color:hsla(0,0%,100%,.65)}.wp-block-pullquote{border-top:4px solid;border-bottom:4px solid;margin-bottom:1.75em;color:currentColor}.wp-block-pullquote__citation,.wp-block-pullquote cite,.wp-block-pullquote footer{color:currentColor;text-transform:uppercase;font-size:.8125em;font-style:normal}.wp-block-quote{border-left:.25em solid;margin:0 0 1.75em;padding-left:1em}.wp-block-quote cite,.wp-block-quote footer{color:currentColor;font-size:.8125em;position:relative;font-style:normal}.wp-block-quote.has-text-align-right{border-left:none;border-right:.25em solid;padding-left:0;padding-right:1em}.wp-block-quote.has-text-align-center{border:none;padding-left:0}.wp-block-quote.is-large,.wp-block-quote.is-style-large,.wp-block-quote.is-style-plain{border:none}.wp-block-search .wp-block-search__label{font-weight:700}.wp-block-group:where(.has-background){padding:1.25em 2.375em}.wp-block-separator{border:none;border-bottom:2px solid;margin-left:auto;margin-right:auto;opacity:.4}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100px}.wp-block-separator.has-background:not(.is-style-dots){border-bottom:none;height:1px}.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots){height:2px}.wp-block-table thead{border-bottom:3px solid}.wp-block-table tfoot{border-top:3px solid}.wp-block-table td,.wp-block-table th{padding:.5em;border:1px solid;word-break:normal}.wp-block-table figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-table figcaption{color:hsla(0,0%,100%,.65)}.wp-block-video figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-video figcaption{color:hsla(0,0%,100%,.65)}.wp-block-template-part.has-background{padding:1.25em 2.375em;margin-top:0;margin-bottom:0}
+</style>
+<style id='global-styles-inline-css'>
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+</style>
+
+<!--[if IE]>
+<link rel='stylesheet' id='sinatra-ie-css'  href='https://nicotrin.com/wp-content/themes/sinatra/assets/css/compatibility/ie.min.css?ver=1.2.1' media='all' />
+<![endif]-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="rocketlazyloadscript" src='https://nicotrin.com/wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js' defer></script>
+<script type="rocketlazyloadscript" src='https://nicotrin.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js' defer></script>
+<!--[if IE]>
+<script src='https://nicotrin.com/wp-content/themes/sinatra/assets/js/vendors/flexibility.min.js?ver=1.2.1' id='sinatra-flexibility-js'></script>
+<script id='sinatra-flexibility-js-after'>
+flexibility(document.documentElement);</script>
+<![endif]-->
+<link rel="https://api.w.org/" href="https://nicotrin.com/wp-json/" /><link rel="alternate" type="application/json" href="https://nicotrin.com/wp-json/wp/v2/pages/1070" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://nicotrin.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://nicotrin.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.9.2" />
+<link rel='shortlink' href='https://nicotrin.com/' />
+<link rel="alternate" type="application/json+oembed" href="https://nicotrin.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fnicotrin.com%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://nicotrin.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fnicotrin.com%2F&#038;format=xml" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script type="rocketlazyloadscript" async src="https://www.googletagmanager.com/gtag/js?id=UA-216473401-1"></script>
+<script type="rocketlazyloadscript">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-216473401-1');
+</script>
+<!-- Facebook Pixel Code -->
+<script type="rocketlazyloadscript">
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '420072739854176');
+fbq('track', 'PageView');
+	fbq('init', '1352397158531788');
+	fbq('track', 'PageView');
+	fbq('init', '1104862890338607');
+	fbq('track', 'PageView');
+	fbq('track', 'Pv');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=420072739854176&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Facebook Pixel Code -->
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script type="rocketlazyloadscript" async src="https://www.googletagmanager.com/gtag/js?id=UA-216485652-1">
+</script>
+<script type="rocketlazyloadscript">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-216485652-1');
+</script><meta name="theme-color" content="#3857F1"><link rel="icon" href="https://nicotrin.com/wp-content/uploads/2022/01/cropped-natural-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://nicotrin.com/wp-content/uploads/2022/01/cropped-natural-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://nicotrin.com/wp-content/uploads/2022/01/cropped-natural-180x180.png" />
+<meta name="msapplication-TileImage" content="https://nicotrin.com/wp-content/uploads/2022/01/cropped-natural-270x270.png" />
+<noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript>	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" /></head>
+<body class="home page-template page-template-elementor_canvas page page-id-1070 wp-embed-responsive sinatra-topbar__separators-regular sinatra-is-mobile sinatra-layout__fw-contained sinatra-header-layout-1 sinatra-menu-animation-underline sinatra-header__separators-none si-page-title-align-left sinatra-no-sidebar entry-media-hover-style-1 sinatra-copyright-layout-1 si-input-supported validate-comment-form si-menu-accessibility elementor-default elementor-template-canvas elementor-kit-8 elementor-page elementor-page-1070">
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-dark-grayscale"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 0.49803921568627" /><feFuncG type="table" tableValues="0 0.49803921568627" /><feFuncB type="table" tableValues="0 0.49803921568627" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-grayscale"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 1" /><feFuncG type="table" tableValues="0 1" /><feFuncB type="table" tableValues="0 1" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-purple-yellow"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.54901960784314 0.98823529411765" /><feFuncG type="table" tableValues="0 1" /><feFuncB type="table" tableValues="0.71764705882353 0.25490196078431" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-blue-red"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 1" /><feFuncG type="table" tableValues="0 0.27843137254902" /><feFuncB type="table" tableValues="0.5921568627451 0.27843137254902" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-midnight"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 0" /><feFuncG type="table" tableValues="0 0.64705882352941" /><feFuncB type="table" tableValues="0 1" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-magenta-yellow"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.78039215686275 1" /><feFuncG type="table" tableValues="0 0.94901960784314" /><feFuncB type="table" tableValues="0.35294117647059 0.47058823529412" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-purple-green"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.65098039215686 0.40392156862745" /><feFuncG type="table" tableValues="0 1" /><feFuncB type="table" tableValues="0.44705882352941 0.4" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-blue-orange"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.098039215686275 1" /><feFuncG type="table" tableValues="0 0.66274509803922" /><feFuncB type="table" tableValues="0.84705882352941 0.41960784313725" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg>		<div data-elementor-type="wp-page" data-elementor-id="1070" class="elementor elementor-1070" data-elementor-settings="[]">
+						<div class="elementor-inner">
+							<div class="elementor-section-wrap">
+							<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-55e511be elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="55e511be" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-78933560" data-id="78933560" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-764f8a74 elementor-widget elementor-widget-spacer" data-id="764f8a74" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-9f4b58b elementor-hidden-tablet elementor-hidden-phone elementor-widget elementor-widget-heading" data-id="9f4b58b" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">PODEROSO TRATAMENTO NATURAL PARA<br><span style="color:#FFCA01">ELIMINAR O VÍCIO DO CIGARRO</span></h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-2a8a2a5d elementor-hidden-desktop elementor-widget elementor-widget-heading" data-id="2a8a2a5d" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">PODEROSO TRATAMENTO NATURAL PARA <span style="color:#FFCA01">ELIMINAR O VÍCIO  DO CIGARRO</span></h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-2c05fb3b elementor-widget elementor-widget-heading" data-id="2c05fb3b" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default"> <b><i> Resultado Rápido e Definitivo!</i></b></h2>		</div>
+				</div>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-inner-section elementor-element elementor-element-3aeeb525 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="3aeeb525" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-68f15a4" data-id="68f15a4" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-10ff4820 elementor-align-left elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="10ff4820" data-element_type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+					<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-double"></i>						</span>
+										<span class="elementor-icon-list-text">ELIMINA O DESEJO PELA NICOTINA</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-double"></i>						</span>
+										<span class="elementor-icon-list-text">PREVINE O CÂNCER</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-double"></i>						</span>
+										<span class="elementor-icon-list-text">EVITA O DERRAME E O INFARTO</span>
+									</li>
+						</ul>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-47e81051" data-id="47e81051" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-428242ac elementor-widget elementor-widget-image" data-id="428242ac" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image">
+										<img width="448" height="417" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20448%20417'%3E%3C/svg%3E" class="attachment-large size-large" alt="" data-lazy-srcset="https://nicotrin.com/wp-content/uploads/2021/12/trioinclnado-min.png 448w, https://nicotrin.com/wp-content/uploads/2021/12/trioinclnado-min-300x279.png 300w" data-lazy-sizes="(max-width: 448px) 100vw, 448px" data-lazy-src="https://nicotrin.com/wp-content/uploads/2021/12/trioinclnado-min.png" /><noscript><img width="448" height="417" src="https://nicotrin.com/wp-content/uploads/2021/12/trioinclnado-min.png" class="attachment-large size-large" alt="" srcset="https://nicotrin.com/wp-content/uploads/2021/12/trioinclnado-min.png 448w, https://nicotrin.com/wp-content/uploads/2021/12/trioinclnado-min-300x279.png 300w" sizes="(max-width: 448px) 100vw, 448px" /></noscript>											</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-5bf77ae5" data-id="5bf77ae5" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-2251d0a5 elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="2251d0a5" data-element_type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+					<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-double"></i>						</span>
+										<span class="elementor-icon-list-text">REDUZ A ANSIEDADE E O STRESS</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-double"></i>						</span>
+										<span class="elementor-icon-list-text">ELIMINA O MAU CHEIRO </span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-double"></i>						</span>
+										<span class="elementor-icon-list-text">MELHORA O SISTEMA RESPIRATÓRIO</span>
+									</li>
+						</ul>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<div class="elementor-element elementor-element-3d9b8005 elementor-align-justify elementor-widget elementor-widget-button" data-id="3d9b8005" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-button-wrapper">
+			<a href="#planos" class="elementor-button-link elementor-button elementor-size-sm elementor-animation-buzz-out" role="button">
+						<span class="elementor-button-content-wrapper">
+						<span class="elementor-button-text"><i class="fas fa-check-double"></i> EXPERIMENTE HOJE</span>
+		</span>
+					</a>
+		</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-7d086b98 elementor-hidden-desktop elementor-hidden-tablet elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="7d086b98" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-49f2e1dc" data-id="49f2e1dc" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-31a4310 elementor-widget elementor-widget-heading" data-id="31a4310" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">PARE DE FUMAR COM NICOTRIN E<span style="color:#388853"> <BR>VEJA OS BENEFÍCIOS PARA SUA SAÚDE</span></h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-466ca70 elementor-widget elementor-widget-heading" data-id="466ca70" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Uma solução 100% natural que irá acabar de vez com a sua dependência pela nicotina.</h2>		</div>
+				</div>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-inner-section elementor-element elementor-element-3ced2ffe elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="3ced2ffe" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-599824e1" data-id="599824e1" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-7c2e2dde elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-image-box" data-id="7c2e2dde" data-element_type="widget" data-widget_type="image-box.default">
+				<div class="elementor-widget-container">
+			<div class="elementor-image-box-wrapper"><figure class="elementor-image-box-img"><img width="300" height="300" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" class="attachment-full size-full" alt="" data-lazy-srcset="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-91.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-91-150x150.png 150w" data-lazy-sizes="(max-width: 300px) 100vw, 300px" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-91.png" /><noscript><img width="300" height="300" src="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-91.png" class="attachment-full size-full" alt="" srcset="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-91.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-91-150x150.png 150w" sizes="(max-width: 300px) 100vw, 300px" /></noscript></figure><div class="elementor-image-box-content"><h3 class="elementor-image-box-title">Reduz em Até 94% a Vontade de Fumar</h3><p class="elementor-image-box-description">Logo nas primeiras semanas de uso você já irá perceber uma diminuição expressiva no desejo pela nicotina.</p></div></div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-25f7fd4c" data-id="25f7fd4c" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-72cc04d8 elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-image-box" data-id="72cc04d8" data-element_type="widget" data-widget_type="image-box.default">
+				<div class="elementor-widget-container">
+			<div class="elementor-image-box-wrapper"><figure class="elementor-image-box-img"><img width="300" height="300" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" class="attachment-full size-full" alt="" data-lazy-srcset="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-92.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-92-150x150.png 150w" data-lazy-sizes="(max-width: 300px) 100vw, 300px" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-92.png" /><noscript><img width="300" height="300" src="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-92.png" class="attachment-full size-full" alt="" srcset="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-92.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-92-150x150.png 150w" sizes="(max-width: 300px) 100vw, 300px" /></noscript></figure><div class="elementor-image-box-content"><h3 class="elementor-image-box-title">Recupera os Danos Causados Pelo Cigarro</h3><p class="elementor-image-box-description">A fórmula exclusiva do Nicotrin irá eliminar todas as toxinas do cigarro presentes no seu corpo e repor as células destruídas pela nicotina.</p></div></div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-2713666a" data-id="2713666a" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-7405ea5e elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-image-box" data-id="7405ea5e" data-element_type="widget" data-widget_type="image-box.default">
+				<div class="elementor-widget-container">
+			<div class="elementor-image-box-wrapper"><figure class="elementor-image-box-img"><img width="300" height="300" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" class="attachment-full size-full" alt="" data-lazy-srcset="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-93.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-93-150x150.png 150w" data-lazy-sizes="(max-width: 300px) 100vw, 300px" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-93.png" /><noscript><img width="300" height="300" src="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-93.png" class="attachment-full size-full" alt="" srcset="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-93.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-93-150x150.png 150w" sizes="(max-width: 300px) 100vw, 300px" /></noscript></figure><div class="elementor-image-box-content"><h3 class="elementor-image-box-title">Elimina o Mau Cheiro</h3><p class="elementor-image-box-description">Chega de sentir-se envergonhado pelo cheiro forte e desagradável que tanto incomoda as outras pessoas.</p></div></div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-6ac2171e" data-id="6ac2171e" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-1f2d1ac0 elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-image-box" data-id="1f2d1ac0" data-element_type="widget" data-widget_type="image-box.default">
+				<div class="elementor-widget-container">
+			<div class="elementor-image-box-wrapper"><figure class="elementor-image-box-img"><img width="300" height="300" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" class="attachment-full size-full" alt="" data-lazy-srcset="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-94.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-94-150x150.png 150w" data-lazy-sizes="(max-width: 300px) 100vw, 300px" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-94.png" /><noscript><img width="300" height="300" src="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-94.png" class="attachment-full size-full" alt="" srcset="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-94.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-94-150x150.png 150w" sizes="(max-width: 300px) 100vw, 300px" /></noscript></figure><div class="elementor-image-box-content"><h3 class="elementor-image-box-title">Acaba com a Tosse</h3><p class="elementor-image-box-description">Logo nos primeiros dias a sua tosse, típica de fumante, irá desaparecer, melhorando o sistema respiratório.</p></div></div>		</div>
+				</div>
+				<div class="elementor-element elementor-element-09bc1b4 elementor-align-justify elementor-hidden-tablet elementor-hidden-phone elementor-widget elementor-widget-button" data-id="09bc1b4" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-button-wrapper">
+			<a href="#planos" class="elementor-button-link elementor-button elementor-size-sm elementor-animation-buzz-out" role="button">
+						<span class="elementor-button-content-wrapper">
+						<span class="elementor-button-text"><i class="fas fa-check-double"></i> EXPERIMENTE HOJE</span>
+		</span>
+					</a>
+		</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-312009db elementor-hidden-tablet elementor-hidden-phone elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="312009db" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-676926c9" data-id="676926c9" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-993e9ce elementor-widget elementor-widget-spacer" data-id="993e9ce" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-23dbb486 elementor-hidden-tablet elementor-hidden-phone elementor-widget elementor-widget-heading" data-id="23dbb486" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">PARE DE FUMAR COM NICOTRIN E
+<br><span style="color:#388853">VEJA OS BENEFÍCIOS PARA SUA SAÚDE!</span></h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-6da4fde1 elementor-widget elementor-widget-heading" data-id="6da4fde1" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Uma solução 100% natural que irá acabar de vez com a sua dependência pela nicotina.</h2>		</div>
+				</div>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-inner-section elementor-element elementor-element-bb8a748 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="bb8a748" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-189709b" data-id="189709b" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-f03808a elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-image-box" data-id="f03808a" data-element_type="widget" data-widget_type="image-box.default">
+				<div class="elementor-widget-container">
+			<div class="elementor-image-box-wrapper"><figure class="elementor-image-box-img"><img width="300" height="300" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" class="attachment-full size-full" alt="" data-lazy-srcset="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-91.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-91-150x150.png 150w" data-lazy-sizes="(max-width: 300px) 100vw, 300px" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-91.png" /><noscript><img width="300" height="300" src="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-91.png" class="attachment-full size-full" alt="" srcset="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-91.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-91-150x150.png 150w" sizes="(max-width: 300px) 100vw, 300px" /></noscript></figure><div class="elementor-image-box-content"><h3 class="elementor-image-box-title">Reduz em Até 94% a Vontade de Fumar</h3><p class="elementor-image-box-description">Logo nas primeiras semanas de uso você já irá perceber uma diminuição expressiva no desejo pela nicotina.</p></div></div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-e48dc41" data-id="e48dc41" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-38f31c5 elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-image-box" data-id="38f31c5" data-element_type="widget" data-widget_type="image-box.default">
+				<div class="elementor-widget-container">
+			<div class="elementor-image-box-wrapper"><figure class="elementor-image-box-img"><img width="300" height="300" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" class="attachment-full size-full" alt="" data-lazy-srcset="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-92.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-92-150x150.png 150w" data-lazy-sizes="(max-width: 300px) 100vw, 300px" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-92.png" /><noscript><img width="300" height="300" src="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-92.png" class="attachment-full size-full" alt="" srcset="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-92.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-92-150x150.png 150w" sizes="(max-width: 300px) 100vw, 300px" /></noscript></figure><div class="elementor-image-box-content"><h3 class="elementor-image-box-title">Recupera os Danos Causados Pelo Cigarro</h3><p class="elementor-image-box-description">A fórmula exclusiva do Nicotrin irá eliminar todas as toxinas do cigarro presentes no seu corpo e repor as células destruídas pela nicotina.</p></div></div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-e011227" data-id="e011227" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-a23522f elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-image-box" data-id="a23522f" data-element_type="widget" data-widget_type="image-box.default">
+				<div class="elementor-widget-container">
+			<div class="elementor-image-box-wrapper"><figure class="elementor-image-box-img"><img width="300" height="300" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" class="attachment-full size-full" alt="" data-lazy-srcset="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-93.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-93-150x150.png 150w" data-lazy-sizes="(max-width: 300px) 100vw, 300px" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-93.png" /><noscript><img width="300" height="300" src="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-93.png" class="attachment-full size-full" alt="" srcset="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-93.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-93-150x150.png 150w" sizes="(max-width: 300px) 100vw, 300px" /></noscript></figure><div class="elementor-image-box-content"><h3 class="elementor-image-box-title">Elimina o Mau Cheiro</h3><p class="elementor-image-box-description">Chega de sentir-se envergonhado pelo cheiro forte e desagradável que tanto incomoda as outras pessoas.</p></div></div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-01d30c8" data-id="01d30c8" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-5c03e3f elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-image-box" data-id="5c03e3f" data-element_type="widget" data-widget_type="image-box.default">
+				<div class="elementor-widget-container">
+			<div class="elementor-image-box-wrapper"><figure class="elementor-image-box-img"><img width="300" height="300" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" class="attachment-full size-full" alt="" data-lazy-srcset="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-94.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-94-150x150.png 150w" data-lazy-sizes="(max-width: 300px) 100vw, 300px" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-94.png" /><noscript><img width="300" height="300" src="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-94.png" class="attachment-full size-full" alt="" srcset="https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-94.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/Design-sem-nome-94-150x150.png 150w" sizes="(max-width: 300px) 100vw, 300px" /></noscript></figure><div class="elementor-image-box-content"><h3 class="elementor-image-box-title">Acaba com a Tosse</h3><p class="elementor-image-box-description">Logo nos primeiros dias a sua tosse, típica de fumante, irá desaparecer, melhorando o sistema respiratório.</p></div></div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-5246e142 elementor-reverse-tablet elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="5246e142" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+							<div class="elementor-background-overlay"></div>
+							<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-1648a377" data-id="1648a377" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-77e547a5 elementor-widget elementor-widget-menu-anchor" data-id="77e547a5" data-element_type="widget" data-widget_type="menu-anchor.default">
+				<div class="elementor-widget-container">
+					<div id="topo" class="elementor-menu-anchor"></div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-4071ac03 elementor-widget elementor-widget-heading" data-id="4071ac03" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">PESSOAS COMUNS, </font></font><span style="color:#FFCA01"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">RESULTADOS REAIS!</font></font></span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-5478155d elementor-widget elementor-widget-heading" data-id="5478155d" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">SATISFAÇÃO E EFICÁCIA COMPROVADAS!<br><br>Único Produto com  (92,7% ⭐ ⭐ ⭐ ⭐ ⭐) de Satisfação dos Clientes! </h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-6280c74d elementor-arrows-position-inside elementor-pagination-position-outside elementor-widget elementor-widget-image-carousel" data-id="6280c74d" data-element_type="widget" data-settings="{&quot;navigation&quot;:&quot;both&quot;,&quot;autoplay&quot;:&quot;yes&quot;,&quot;pause_on_hover&quot;:&quot;yes&quot;,&quot;pause_on_interaction&quot;:&quot;yes&quot;,&quot;autoplay_speed&quot;:5000,&quot;infinite&quot;:&quot;yes&quot;,&quot;speed&quot;:500}" data-widget_type="image-carousel.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image-carousel-wrapper swiper-container" dir="ltr">
+			<div class="elementor-image-carousel swiper-wrapper">
+				<div class="swiper-slide"><figure class="swiper-slide-inner"><img class="swiper-slide-image" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="depoimento-MARISA-4-compressed" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/02/depoimento-MARISA-4-compressed.jpg" /><noscript><img class="swiper-slide-image" src="https://nicotrin.com/wp-content/uploads/2022/02/depoimento-MARISA-4-compressed.jpg" alt="depoimento-MARISA-4-compressed" /></noscript></figure></div><div class="swiper-slide"><figure class="swiper-slide-inner"><img class="swiper-slide-image" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="depoimento-TINO-4-compressed" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/02/depoimento-TINO-4-compressed.jpg" /><noscript><img class="swiper-slide-image" src="https://nicotrin.com/wp-content/uploads/2022/02/depoimento-TINO-4-compressed.jpg" alt="depoimento-TINO-4-compressed" /></noscript></figure></div><div class="swiper-slide"><figure class="swiper-slide-inner"><img class="swiper-slide-image" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="depoimento-CLARICE-4 (1)-compressed" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/02/depoimento-CLARICE-4-1-compressed.jpg" /><noscript><img class="swiper-slide-image" src="https://nicotrin.com/wp-content/uploads/2022/02/depoimento-CLARICE-4-1-compressed.jpg" alt="depoimento-CLARICE-4 (1)-compressed" /></noscript></figure></div>			</div>
+												<div class="swiper-pagination"></div>
+													<div class="elementor-swiper-button elementor-swiper-button-prev">
+						<i class="eicon-chevron-left" aria-hidden="true"></i>
+						<span class="elementor-screen-only">Previous</span>
+					</div>
+					<div class="elementor-swiper-button elementor-swiper-button-next">
+						<i class="eicon-chevron-right" aria-hidden="true"></i>
+						<span class="elementor-screen-only">Next</span>
+					</div>
+									</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-a16a1e7 elementor-align-justify elementor-widget elementor-widget-button" data-id="a16a1e7" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-button-wrapper">
+			<a href="#planos" class="elementor-button-link elementor-button elementor-size-sm elementor-animation-buzz-out" role="button">
+						<span class="elementor-button-content-wrapper">
+						<span class="elementor-button-text"><i class="fas fa-check-double"></i> EU QUERO PARAR DE FUMAR</span>
+		</span>
+					</a>
+		</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-61b37b1d elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="61b37b1d" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-2ca0645e" data-id="2ca0645e" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-75bf26fb elementor-widget elementor-widget-spacer" data-id="75bf26fb" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-b252d17 elementor-widget elementor-widget-heading" data-id="b252d17" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Qual o Segredo do <font color="#388853">Nicotrin? </font> </h2>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-49896bd5 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="49896bd5" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-2aac36a" data-id="2aac36a" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-28bdb9cc elementor-widget elementor-widget-spacer" data-id="28bdb9cc" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-15e33879 elementor-hidden-desktop elementor-widget elementor-widget-image" data-id="15e33879" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image">
+										<img width="696" height="392" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20696%20392'%3E%3C/svg%3E" class="attachment-large size-large" alt="" data-lazy-srcset="https://nicotrin.com/wp-content/uploads/2022/01/nao-fumar-696x392-1.jpg 696w, https://nicotrin.com/wp-content/uploads/2022/01/nao-fumar-696x392-1-300x169.jpg 300w" data-lazy-sizes="(max-width: 696px) 100vw, 696px" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/nao-fumar-696x392-1.jpg" /><noscript><img width="696" height="392" src="https://nicotrin.com/wp-content/uploads/2022/01/nao-fumar-696x392-1.jpg" class="attachment-large size-large" alt="" srcset="https://nicotrin.com/wp-content/uploads/2022/01/nao-fumar-696x392-1.jpg 696w, https://nicotrin.com/wp-content/uploads/2022/01/nao-fumar-696x392-1-300x169.jpg 300w" sizes="(max-width: 696px) 100vw, 696px" /></noscript>											</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-61be8bea elementor-widget elementor-widget-spacer" data-id="61be8bea" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-494b799f elementor-widget elementor-widget-heading" data-id="494b799f" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default"><b>Com a </b> fórmula revolucionária com exclusiva nanotecnologia, Nicotrin age de dentro para fora, promovendo uma desintoxicação e bloqueando a entrada da nicotina e do alcatrão que são os principais causadores do vício, além de diminuir a ansiedade e o stress!<br><br>Nicotrin irá eliminar todas as toxinas do cigarro presentes no seu corpo e auxiliar na restauração das células destruídas pela nicotina.</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-7ff0f03b elementor-widget elementor-widget-spacer" data-id="7ff0f03b" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-bf8429c elementor-hidden-tablet elementor-hidden-phone" data-id="bf8429c" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-583954bd elementor-widget elementor-widget-spacer" data-id="583954bd" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-27880518 elementor-hidden-phone elementor-hidden-tablet elementor-widget elementor-widget-image" data-id="27880518" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image">
+										<img width="696" height="392" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20696%20392'%3E%3C/svg%3E" class="attachment-large size-large" alt="" data-lazy-srcset="https://nicotrin.com/wp-content/uploads/2022/01/nao-fumar-696x392-1.jpg 696w, https://nicotrin.com/wp-content/uploads/2022/01/nao-fumar-696x392-1-300x169.jpg 300w" data-lazy-sizes="(max-width: 696px) 100vw, 696px" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/nao-fumar-696x392-1.jpg" /><noscript><img width="696" height="392" src="https://nicotrin.com/wp-content/uploads/2022/01/nao-fumar-696x392-1.jpg" class="attachment-large size-large" alt="" srcset="https://nicotrin.com/wp-content/uploads/2022/01/nao-fumar-696x392-1.jpg 696w, https://nicotrin.com/wp-content/uploads/2022/01/nao-fumar-696x392-1-300x169.jpg 300w" sizes="(max-width: 696px) 100vw, 696px" /></noscript>											</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-33345b2 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="33345b2" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-50c55450" data-id="50c55450" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-36a4cee9 elementor-align-justify elementor-widget elementor-widget-button" data-id="36a4cee9" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-button-wrapper">
+			<a href="#planos" class="elementor-button-link elementor-button elementor-size-sm elementor-animation-buzz-out" role="button">
+						<span class="elementor-button-content-wrapper">
+						<span class="elementor-button-text"><i class="fas fa-check-double"></i> EXPERIMENTE HOJE</span>
+		</span>
+					</a>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-3d099ea7 elementor-widget elementor-widget-spacer" data-id="3d099ea7" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-54aafba0 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="54aafba0" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+							<div class="elementor-background-overlay"></div>
+							<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-2e58b27b" data-id="2e58b27b" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-42952904 elementor-widget elementor-widget-spacer" data-id="42952904" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-4b5ecaab elementor-widget elementor-widget-heading" data-id="4b5ecaab" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">QUEM USA NICOTRIN, <span style="color:#FFCA01">RECOMENDA!</span></h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-5baf62ae elementor-widget elementor-widget-heading" data-id="5baf62ae" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Já são milhares de clientes com resultados incríveis e<b></b> super satisfeitos.</h2>		</div>
+				</div>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-inner-section elementor-element elementor-element-33221653 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="33221653" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-38be353b" data-id="38be353b" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-36926d85 elementor-aspect-ratio-916 elementor-widget elementor-widget-video" data-id="36926d85" data-element_type="widget" data-settings="{&quot;aspect_ratio&quot;:&quot;916&quot;}" data-widget_type="video.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-wrapper elementor-fit-aspect-ratio elementor-open-inline">
+			<iframe class="elementor-video-iframe" allowfullscreen title="youtube Video Player" src="https://www.youtube-nocookie.com/embed/NKU3oraGz2A?feature=oembed&amp;start&amp;end&amp;wmode=opaque&amp;loop=0&amp;controls=1&amp;mute=0&amp;rel=0&amp;modestbranding=1"></iframe>		</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-50a21211" data-id="50a21211" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-73ea466e elementor-aspect-ratio-916 elementor-widget elementor-widget-video" data-id="73ea466e" data-element_type="widget" data-settings="{&quot;aspect_ratio&quot;:&quot;916&quot;}" data-widget_type="video.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-wrapper elementor-fit-aspect-ratio elementor-open-inline">
+			<iframe class="elementor-video-iframe" allowfullscreen title="youtube Video Player" src="https://www.youtube-nocookie.com/embed/XrxEAdztaSw?feature=oembed&amp;start&amp;end&amp;wmode=opaque&amp;loop=0&amp;controls=1&amp;mute=0&amp;rel=0&amp;modestbranding=1"></iframe>		</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-74d29465" data-id="74d29465" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-3ee517b elementor-aspect-ratio-916 elementor-widget elementor-widget-video" data-id="3ee517b" data-element_type="widget" data-settings="{&quot;aspect_ratio&quot;:&quot;916&quot;}" data-widget_type="video.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-wrapper elementor-fit-aspect-ratio elementor-open-inline">
+			<iframe class="elementor-video-iframe" allowfullscreen title="youtube Video Player" src="https://www.youtube-nocookie.com/embed/L5PCPZp5jVw?feature=oembed&amp;start&amp;end&amp;wmode=opaque&amp;loop=0&amp;controls=1&amp;mute=0&amp;rel=0&amp;modestbranding=1"></iframe>		</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<div class="elementor-element elementor-element-24cfa303 elementor-align-justify elementor-widget elementor-widget-button" data-id="24cfa303" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-button-wrapper">
+			<a href="#planos" class="elementor-button-link elementor-button elementor-size-sm elementor-animation-buzz-out" role="button">
+						<span class="elementor-button-content-wrapper">
+						<span class="elementor-button-text"><i class="fas fa-check-double"></i> EU QUERO PARAR DE FUMAR</span>
+		</span>
+					</a>
+		</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-c32ba41 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="c32ba41" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-3e9d7b5b" data-id="3e9d7b5b" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-21887c97 elementor-widget elementor-widget-heading" data-id="21887c97" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">ESCOLHA A MELHOR <span style="color:#FFFFF">OPÇÃO PARA VOCÊ!</span></h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-5c3811c8 elementor-widget elementor-widget-heading" data-id="5c3811c8" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Recomendamos o tratamento de <span style="text-decoration: underline;"> 3 a 5 meses</span> para melhores resultados</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-37dea08b elementor-widget elementor-widget-menu-anchor" data-id="37dea08b" data-element_type="widget" data-widget_type="menu-anchor.default">
+				<div class="elementor-widget-container">
+					<div id="planos" class="elementor-menu-anchor"></div>
+				</div>
+				</div>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-inner-section elementor-element elementor-element-16800b1e elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="16800b1e" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-4c46a8f1" data-id="4c46a8f1" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-11a4e4b4 elementor-widget elementor-widget-image" data-id="11a4e4b4" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image">
+											<a href="https://ev.braip.com/checkout/pla6r10r/chek9e9l?split=12" target="_blank">
+							<img width="300" height="640" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20640'%3E%3C/svg%3E" class="attachment-large size-large" alt="" data-lazy-srcset="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-3-LEVE-5.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-3-LEVE-5-141x300.png 141w" data-lazy-sizes="(max-width: 300px) 100vw, 300px" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-3-LEVE-5.png" /><noscript><img width="300" height="640" src="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-3-LEVE-5.png" class="attachment-large size-large" alt="" srcset="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-3-LEVE-5.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-3-LEVE-5-141x300.png 141w" sizes="(max-width: 300px) 100vw, 300px" /></noscript>								</a>
+											</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-77356fd1" data-id="77356fd1" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-6fe5cfe6 elementor-widget elementor-widget-image" data-id="6fe5cfe6" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image">
+											<a href="https://ev.braip.com/checkout/pladg8o1/chek9e9l?split=12" target="_blank">
+							<img width="300" height="640" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20640'%3E%3C/svg%3E" class="attachment-large size-large" alt="" data-lazy-srcset="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-2-LEVE-3.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-2-LEVE-3-141x300.png 141w" data-lazy-sizes="(max-width: 300px) 100vw, 300px" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-2-LEVE-3.png" /><noscript><img width="300" height="640" src="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-2-LEVE-3.png" class="attachment-large size-large" alt="" srcset="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-2-LEVE-3.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-2-LEVE-3-141x300.png 141w" sizes="(max-width: 300px) 100vw, 300px" /></noscript>								</a>
+											</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-1420a02b" data-id="1420a02b" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-6879052a elementor-widget elementor-widget-image" data-id="6879052a" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image">
+											<a href="https://ev.braip.com/checkout/plaq1z9r/chek9e9l?split=12" target="_blank">
+							<img width="300" height="600" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20600'%3E%3C/svg%3E" class="attachment-large size-large" alt="" data-lazy-srcset="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-1-LEVE-1.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-1-LEVE-1-150x300.png 150w" data-lazy-sizes="(max-width: 300px) 100vw, 300px" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-1-LEVE-1.png" /><noscript><img width="300" height="600" src="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-1-LEVE-1.png" class="attachment-large size-large" alt="" srcset="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-1-LEVE-1.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-1-LEVE-1-150x300.png 150w" sizes="(max-width: 300px) 100vw, 300px" /></noscript>								</a>
+											</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-26d689f0 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="26d689f0" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-70e38e8e" data-id="70e38e8e" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-3772223d elementor-widget elementor-widget-heading" data-id="3772223d" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Você merece ter sua saúde de volta!</h2>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-124fcd09 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="124fcd09" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-2db710ab" data-id="2db710ab" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-4fecba9e elementor-widget elementor-widget-spacer" data-id="4fecba9e" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-4d1f5467 elementor-hidden-desktop elementor-widget elementor-widget-heading" data-id="4d1f5467" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">APROVADO E RECOMENDADO <span style="color:#388853"> <BR>PELOS MELHORES ESPECIALISTAS</span></h2>		</div>
+				</div>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-inner-section elementor-element elementor-element-3ec02d66 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="3ec02d66" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-2b480d01" data-id="2b480d01" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-683c02bd elementor-hidden-tablet elementor-hidden-phone elementor-widget elementor-widget-heading" data-id="683c02bd" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">APROVADO E RECOMENDADO <font color="#388853"> <BR>PELOS MAIORES ESPECIALISTAS</font></h2>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<div class="elementor-element elementor-element-11a43c38 elementor-widget elementor-widget-spacer" data-id="11a43c38" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-2022b11d elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="2022b11d" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-374b5a17" data-id="374b5a17" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-inner-section elementor-element elementor-element-6c74ee86 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="6c74ee86" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-4c1ac787" data-id="4c1ac787" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-5d8e3239 elementor-hidden-desktop elementor-widget elementor-widget-image" data-id="5d8e3239" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image">
+										<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" title="anvisa-min-2.png" alt="anvisa-min-2.png" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/anvisa-min-2.png" /><noscript><img src="https://nicotrin.com/wp-content/uploads/2022/01/anvisa-min-2.png" title="anvisa-min-2.png" alt="anvisa-min-2.png" /></noscript>											</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-4a56cbd9 elementor-widget elementor-widget-spacer" data-id="4a56cbd9" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-10f25a45 elementor-widget elementor-widget-heading" data-id="10f25a45" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">No Brasil, recebeu o selo de Garantia da ANVISA e do Ministério da Saúde.</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-d4325fc elementor-widget elementor-widget-heading" data-id="d4325fc" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Seus Componentes são 100% Naturais, sendo totalmente seguros e permitidos pelos Órgãos Regulamentadores.
+</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-41b59409 elementor-widget elementor-widget-heading" data-id="41b59409" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">O Nicotrin é produzido em um laboratório, que está entre os Maiores Fabricantes dos Estados Unidos, com mais de 30 Anos de Experiência.
+</h2>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-50e6a73 elementor-hidden-tablet elementor-hidden-phone" data-id="50e6a73" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-386971b9 elementor-widget elementor-widget-image" data-id="386971b9" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image">
+										<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" title="anvisa-min-2.png" alt="anvisa-min-2.png" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/anvisa-min-2.png" /><noscript><img src="https://nicotrin.com/wp-content/uploads/2022/01/anvisa-min-2.png" title="anvisa-min-2.png" alt="anvisa-min-2.png" /></noscript>											</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<div class="elementor-element elementor-element-35b84319 elementor-widget elementor-widget-spacer" data-id="35b84319" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-33c370f5 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="33c370f5" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-301feb8f" data-id="301feb8f" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-694e13f6 elementor-widget elementor-widget-spacer" data-id="694e13f6" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-73b9f2a elementor-hidden-desktop elementor-widget elementor-widget-heading" data-id="73b9f2a" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">SATISFAÇÃO GARANTIDA <span style="color:#FFCA01"> <BR>OU SEU DINHERO DE VOLTA</span></h2>		</div>
+				</div>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-inner-section elementor-element elementor-element-403ae43 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="403ae43" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-187c7361" data-id="187c7361" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-77fde117 elementor-widget elementor-widget-image" data-id="77fde117" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image">
+										<img width="296" height="296" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20296%20296'%3E%3C/svg%3E" class="attachment-large size-large" alt="" data-lazy-srcset="https://nicotrin.com/wp-content/uploads/2022/01/garantia-1.png 296w, https://nicotrin.com/wp-content/uploads/2022/01/garantia-1-150x150.png 150w" data-lazy-sizes="(max-width: 296px) 100vw, 296px" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/garantia-1.png" /><noscript><img width="296" height="296" src="https://nicotrin.com/wp-content/uploads/2022/01/garantia-1.png" class="attachment-large size-large" alt="" srcset="https://nicotrin.com/wp-content/uploads/2022/01/garantia-1.png 296w, https://nicotrin.com/wp-content/uploads/2022/01/garantia-1-150x150.png 150w" sizes="(max-width: 296px) 100vw, 296px" /></noscript>											</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-629c4cc4" data-id="629c4cc4" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-6bbaa528 elementor-hidden-tablet elementor-hidden-phone elementor-widget elementor-widget-heading" data-id="6bbaa528" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h3 class="elementor-heading-title elementor-size-default">SATISFAÇÃO GARANTIDA  <font color="#FFCA01"> <BR>OU SEU DINHEIRO DE VOLTA</font><br></h3>		</div>
+				</div>
+				<div class="elementor-element elementor-element-74f64a4f elementor-widget elementor-widget-heading" data-id="74f64a4f" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Confiamos tanto na eficácia do NICOTRIN que caso você utilize ele durante 30 dias e não tenha resultados, devolveremos o seu dinheiro.<br> Isso mesmo! Resultados em 30 dias ou seu dinheiro de volta. 
+</h2>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<div class="elementor-element elementor-element-21ae00ba elementor-widget elementor-widget-menu-anchor" data-id="21ae00ba" data-element_type="widget" data-widget_type="menu-anchor.default">
+				<div class="elementor-widget-container">
+					<div id="oferta" class="elementor-menu-anchor"></div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-79b714b4 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="79b714b4" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-11955644" data-id="11955644" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-493517 elementor-widget elementor-widget-heading" data-id="493517" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">EM DÚVIDA SOBRE<br>COMPRAR PELA INTERNET?</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-4d271e79 elementor-widget elementor-widget-heading" data-id="4d271e79" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Fique tranquilo, comprar o <span style="color:#606060"> <b>NICOTRIN</b></span> é fácil, prático e totalmente seguro.</h2>		</div>
+				</div>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-inner-section elementor-element elementor-element-72295bd1 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="72295bd1" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-3ddbb9c9" data-id="3ddbb9c9" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-4bc47d03 elementor-widget elementor-widget-image" data-id="4bc47d03" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image">
+										<img width="778" height="133" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20778%20133'%3E%3C/svg%3E" class="attachment-large size-large" alt="" data-lazy-srcset="https://nicotrin.com/wp-content/uploads/2022/01/icon-top.png 778w, https://nicotrin.com/wp-content/uploads/2022/01/icon-top-300x51.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/icon-top-768x131.png 768w" data-lazy-sizes="(max-width: 778px) 100vw, 778px" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/icon-top.png" /><noscript><img width="778" height="133" src="https://nicotrin.com/wp-content/uploads/2022/01/icon-top.png" class="attachment-large size-large" alt="" srcset="https://nicotrin.com/wp-content/uploads/2022/01/icon-top.png 778w, https://nicotrin.com/wp-content/uploads/2022/01/icon-top-300x51.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/icon-top-768x131.png 768w" sizes="(max-width: 778px) 100vw, 778px" /></noscript>											</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-inner-section elementor-element elementor-element-7b592a28 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="7b592a28" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-1f38b76e" data-id="1f38b76e" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-8270a68 elementor-widget elementor-widget-image" data-id="8270a68" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image">
+											<a href="https://ev.braip.com/checkout/pla6r10r/chek9e9l?split=12" target="_blank">
+							<img width="300" height="640" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20640'%3E%3C/svg%3E" class="attachment-large size-large" alt="" data-lazy-srcset="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-3-LEVE-5.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-3-LEVE-5-141x300.png 141w" data-lazy-sizes="(max-width: 300px) 100vw, 300px" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-3-LEVE-5.png" /><noscript><img width="300" height="640" src="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-3-LEVE-5.png" class="attachment-large size-large" alt="" srcset="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-3-LEVE-5.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-3-LEVE-5-141x300.png 141w" sizes="(max-width: 300px) 100vw, 300px" /></noscript>								</a>
+											</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-19555c17" data-id="19555c17" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-1095ce86 elementor-widget elementor-widget-image" data-id="1095ce86" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image">
+											<a href="https://ev.braip.com/checkout/pladg8o1/chek9e9l?split=12" target="_blank">
+							<img width="300" height="640" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20640'%3E%3C/svg%3E" class="attachment-large size-large" alt="" data-lazy-srcset="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-2-LEVE-3.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-2-LEVE-3-141x300.png 141w" data-lazy-sizes="(max-width: 300px) 100vw, 300px" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-2-LEVE-3.png" /><noscript><img width="300" height="640" src="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-2-LEVE-3.png" class="attachment-large size-large" alt="" srcset="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-2-LEVE-3.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-2-LEVE-3-141x300.png 141w" sizes="(max-width: 300px) 100vw, 300px" /></noscript>								</a>
+											</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-6f6a54fe" data-id="6f6a54fe" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-1d3e29ea elementor-widget elementor-widget-image" data-id="1d3e29ea" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image">
+											<a href="https://ev.braip.com/checkout/plaq1z9r/chek9e9l?split=12" target="_blank">
+							<img width="300" height="600" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20600'%3E%3C/svg%3E" class="attachment-large size-large" alt="" data-lazy-srcset="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-1-LEVE-1.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-1-LEVE-1-150x300.png 150w" data-lazy-sizes="(max-width: 300px) 100vw, 300px" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-1-LEVE-1.png" /><noscript><img width="300" height="600" src="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-1-LEVE-1.png" class="attachment-large size-large" alt="" srcset="https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-1-LEVE-1.png 300w, https://nicotrin.com/wp-content/uploads/2022/01/PAGUE-1-LEVE-1-150x300.png 150w" sizes="(max-width: 300px) 100vw, 300px" /></noscript>								</a>
+											</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-1834d9b5 elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="1834d9b5" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-176a1ab5" data-id="176a1ab5" data-element_type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-19b860fb elementor-widget elementor-widget-image" data-id="19b860fb" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image">
+										<img width="570" height="178" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20570%20178'%3E%3C/svg%3E" class="attachment-large size-large" alt="" data-lazy-srcset="https://nicotrin.com/wp-content/uploads/2022/01/garantia-de-entrega-min-1.png 570w, https://nicotrin.com/wp-content/uploads/2022/01/garantia-de-entrega-min-1-300x94.png 300w" data-lazy-sizes="(max-width: 570px) 100vw, 570px" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/garantia-de-entrega-min-1.png" /><noscript><img width="570" height="178" src="https://nicotrin.com/wp-content/uploads/2022/01/garantia-de-entrega-min-1.png" class="attachment-large size-large" alt="" srcset="https://nicotrin.com/wp-content/uploads/2022/01/garantia-de-entrega-min-1.png 570w, https://nicotrin.com/wp-content/uploads/2022/01/garantia-de-entrega-min-1-300x94.png 300w" sizes="(max-width: 570px) 100vw, 570px" /></noscript>											</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-5dfd2c14" data-id="5dfd2c14" data-element_type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-64880b86 elementor-widget elementor-widget-heading" data-id="64880b86" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">ATENÇÃO: Mesmo com o surto de Corona Virus (COVID-19) nosso prazo de entrega permanece de acordo com o PRAZO ESTIMADO pelos Correios 10 à 15 DIAS ÚTEIS.</h2>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-38c1fb38 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="38c1fb38" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+							<div class="elementor-background-overlay"></div>
+							<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-1ec668aa" data-id="1ec668aa" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-5aea14e4 elementor-widget elementor-widget-heading" data-id="5aea14e4" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">TIRE TODAS AS SUAS DÚVIDAS<br> <span style="color:#FFCA01"></span></h2>		</div>
+				</div>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-inner-section elementor-element elementor-element-17757e75 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="17757e75" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-4e3b045d" data-id="4e3b045d" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-5daf0e02 elementor-widget elementor-widget-accordion" data-id="5daf0e02" data-element_type="widget" data-widget_type="accordion.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-accordion" role="tablist">
+							<div class="elementor-accordion-item">
+					<div id="elementor-tab-title-1571" class="elementor-tab-title" data-tab="1" role="tab" aria-controls="elementor-tab-content-1571">
+													<span class="elementor-accordion-icon elementor-accordion-icon-left" aria-hidden="true">
+															<span class="elementor-accordion-icon-closed"><i class="fas fa-plus"></i></span>
+								<span class="elementor-accordion-icon-opened"><i class="fas fa-minus"></i></span>
+														</span>
+												<a class="elementor-accordion-title" href="">QUEM PODE USAR NICOTRIN? EXISTE CONTRAINDICAÇÃO?</a>
+					</div>
+					<div id="elementor-tab-content-1571" class="elementor-tab-content elementor-clearfix" data-tab="1" role="tabpanel" aria-labelledby="elementor-tab-title-1571"><p><span class="text-color1 font-bold">Nicotrin</span> é uma solução 100% natural e não apresenta contraindicação ou efeitos colaterais. Qualquer pessoa acima de 18 anos pode fazer uso de Nicotrin e aproveitar os benefícios.</p></div>
+				</div>
+							<div class="elementor-accordion-item">
+					<div id="elementor-tab-title-1572" class="elementor-tab-title" data-tab="2" role="tab" aria-controls="elementor-tab-content-1572">
+													<span class="elementor-accordion-icon elementor-accordion-icon-left" aria-hidden="true">
+															<span class="elementor-accordion-icon-closed"><i class="fas fa-plus"></i></span>
+								<span class="elementor-accordion-icon-opened"><i class="fas fa-minus"></i></span>
+														</span>
+												<a class="elementor-accordion-title" href="">COMO DEVO TOMAR O NICOTRIN?</a>
+					</div>
+					<div id="elementor-tab-content-1572" class="elementor-tab-content elementor-clearfix" data-tab="2" role="tabpanel" aria-labelledby="elementor-tab-title-1572"><p>Você deve ingerir 2 cápsulas ao dia. Sendo 1 cápsula antes do almoço e outra cápsula antes do jantar.</p></div>
+				</div>
+							<div class="elementor-accordion-item">
+					<div id="elementor-tab-title-1573" class="elementor-tab-title" data-tab="3" role="tab" aria-controls="elementor-tab-content-1573">
+													<span class="elementor-accordion-icon elementor-accordion-icon-left" aria-hidden="true">
+															<span class="elementor-accordion-icon-closed"><i class="fas fa-plus"></i></span>
+								<span class="elementor-accordion-icon-opened"><i class="fas fa-minus"></i></span>
+														</span>
+												<a class="elementor-accordion-title" href="">EM QUANTO TEMPO VOU TER RESULTADOS?</a>
+					</div>
+					<div id="elementor-tab-content-1573" class="elementor-tab-content elementor-clearfix" data-tab="3" role="tabpanel" aria-labelledby="elementor-tab-title-1573"><p>Logo nas primeiras semanas de uso, você já vai perceber uma diminuição expressiva do desejo pela nicotina. Além disso irá se sentir menos ansioso e com mais disposição para realizar as atividades do dia a dia.</p></div>
+				</div>
+							<div class="elementor-accordion-item">
+					<div id="elementor-tab-title-1574" class="elementor-tab-title" data-tab="4" role="tab" aria-controls="elementor-tab-content-1574">
+													<span class="elementor-accordion-icon elementor-accordion-icon-left" aria-hidden="true">
+															<span class="elementor-accordion-icon-closed"><i class="fas fa-plus"></i></span>
+								<span class="elementor-accordion-icon-opened"><i class="fas fa-minus"></i></span>
+														</span>
+												<a class="elementor-accordion-title" href="">QUAL A COMPOSIÇÃO DO NICOTRIN?</a>
+					</div>
+					<div id="elementor-tab-content-1574" class="elementor-tab-content elementor-clearfix" data-tab="4" role="tabpanel" aria-labelledby="elementor-tab-title-1574"><p>Nicotrin possui a combinação perfeita de vitaminas e minerais com a exclusiva nanotecnologia, capaz de eliminar completamente o desejo pela nicotina, reduzir o stress e melhorar o seu humor.</p></div>
+				</div>
+							<div class="elementor-accordion-item">
+					<div id="elementor-tab-title-1575" class="elementor-tab-title" data-tab="5" role="tab" aria-controls="elementor-tab-content-1575">
+													<span class="elementor-accordion-icon elementor-accordion-icon-left" aria-hidden="true">
+															<span class="elementor-accordion-icon-closed"><i class="fas fa-plus"></i></span>
+								<span class="elementor-accordion-icon-opened"><i class="fas fa-minus"></i></span>
+														</span>
+												<a class="elementor-accordion-title" href="">NICOTRIN É LIBERADO PELA ANVISA?</a>
+					</div>
+					<div id="elementor-tab-content-1575" class="elementor-tab-content elementor-clearfix" data-tab="5" role="tabpanel" aria-labelledby="elementor-tab-title-1575"><p>Sim!  Nicotrin passou pelos mais rigorosos testes de segurança e qualidade, recebendo o selo de Garantia da ANVISA e do Ministério da Saúde.</p></div>
+				</div>
+							<div class="elementor-accordion-item">
+					<div id="elementor-tab-title-1576" class="elementor-tab-title" data-tab="6" role="tab" aria-controls="elementor-tab-content-1576">
+													<span class="elementor-accordion-icon elementor-accordion-icon-left" aria-hidden="true">
+															<span class="elementor-accordion-icon-closed"><i class="fas fa-plus"></i></span>
+								<span class="elementor-accordion-icon-opened"><i class="fas fa-minus"></i></span>
+														</span>
+												<a class="elementor-accordion-title" href="">TEM NA FARMÁCIA?</a>
+					</div>
+					<div id="elementor-tab-content-1576" class="elementor-tab-content elementor-clearfix" data-tab="6" role="tabpanel" aria-labelledby="elementor-tab-title-1576"><p>Nicotrin não está disponível nas farmácias para evitar a pirataria. Nosso canal de atendimento é somente através do site oficial: www.nicotrin.com. Nicotrin atende aos mais rígidos critérios de produção e devido ao seu sucesso, empresas tentam copiar a fórmula exclusiva, então, compre somente nos sites oficiais!</p></div>
+				</div>
+							<div class="elementor-accordion-item">
+					<div id="elementor-tab-title-1577" class="elementor-tab-title" data-tab="7" role="tab" aria-controls="elementor-tab-content-1577">
+													<span class="elementor-accordion-icon elementor-accordion-icon-left" aria-hidden="true">
+															<span class="elementor-accordion-icon-closed"><i class="fas fa-plus"></i></span>
+								<span class="elementor-accordion-icon-opened"><i class="fas fa-minus"></i></span>
+														</span>
+												<a class="elementor-accordion-title" href="">QUANTAS CAPSULAS TEM CADA FRASCO?</a>
+					</div>
+					<div id="elementor-tab-content-1577" class="elementor-tab-content elementor-clearfix" data-tab="7" role="tabpanel" aria-labelledby="elementor-tab-title-1577"><p>Cada frasco contém 60 capsulas. Suficientes para um mês de uso.</p></div>
+				</div>
+							<div class="elementor-accordion-item">
+					<div id="elementor-tab-title-1578" class="elementor-tab-title" data-tab="8" role="tab" aria-controls="elementor-tab-content-1578">
+													<span class="elementor-accordion-icon elementor-accordion-icon-left" aria-hidden="true">
+															<span class="elementor-accordion-icon-closed"><i class="fas fa-plus"></i></span>
+								<span class="elementor-accordion-icon-opened"><i class="fas fa-minus"></i></span>
+														</span>
+												<a class="elementor-accordion-title" href="">QUAL O PRAZO DE ENTREGA?</a>
+					</div>
+					<div id="elementor-tab-content-1578" class="elementor-tab-content elementor-clearfix" data-tab="8" role="tabpanel" aria-labelledby="elementor-tab-title-1578"><p>O prazo de entrega é de 10 à 15 dias úteis, podendo variar de acordo com a sua região.</p></div>
+				</div>
+					</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<div class="elementor-element elementor-element-762b664b elementor-align-justify elementor-widget elementor-widget-button" data-id="762b664b" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-button-wrapper">
+			<a href="#oferta" class="elementor-button-link elementor-button elementor-size-sm elementor-animation-buzz-out" role="button">
+						<span class="elementor-button-content-wrapper">
+						<span class="elementor-button-text"><i class="fas fa-check-double"></i> EXPERIMENTE HOJE</span>
+		</span>
+					</a>
+		</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-4e938556 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="4e938556" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-3af07752" data-id="3af07752" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-6005bb03 elementor-widget elementor-widget-heading" data-id="6005bb03" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Formas de Pagamento</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-44df207e elementor-widget elementor-widget-image" data-id="44df207e" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image">
+										<img width="140" height="43" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20140%2043'%3E%3C/svg%3E" class="attachment-large size-large" alt="" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/pagamentoFooter.png" /><noscript><img width="140" height="43" src="https://nicotrin.com/wp-content/uploads/2022/01/pagamentoFooter.png" class="attachment-large size-large" alt="" /></noscript>											</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-781523d6 elementor-widget elementor-widget-heading" data-id="781523d6" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Métodos de entrega</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-3a9be410 elementor-widget elementor-widget-image" data-id="3a9be410" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image">
+										<img width="125" height="52" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20125%2052'%3E%3C/svg%3E" class="attachment-large size-large" alt="" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/correios.png" /><noscript><img width="125" height="52" src="https://nicotrin.com/wp-content/uploads/2022/01/correios.png" class="attachment-large size-large" alt="" /></noscript>											</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-76d42ca2" data-id="76d42ca2" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-c472c8e elementor-widget elementor-widget-heading" data-id="c472c8e" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Links</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-265d022 elementor-mobile-align-center elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="265d022" data-element_type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+					<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+					<a href="https://nicotrin.com/politica-de-privacidade/" target="_blank">					<span class="elementor-icon-list-text">Políticas de Privacidade</span>
+											</a>
+									</li>
+								<li class="elementor-icon-list-item">
+					<a href="https://nicotrin.com/termos-de-uso/" target="_blank">					<span class="elementor-icon-list-text">Termos de Uso</span>
+											</a>
+									</li>
+								<li class="elementor-icon-list-item">
+					<a href="https://app.notazz.com/pedidos/" target="_blank">					<span class="elementor-icon-list-text">Rastrear Pedido</span>
+											</a>
+									</li>
+								<li class="elementor-icon-list-item">
+					<a href="https://gotaprost.com/estudos-e-pesquisas-cientificas/">					<span class="elementor-icon-list-text"></span>
+											</a>
+									</li>
+						</ul>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-63bc3b3" data-id="63bc3b3" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-27af78be elementor-widget elementor-widget-heading" data-id="27af78be" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Tire suas dúvidas com um de nossos atendentes</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-547fce5a elementor-widget elementor-widget-heading" data-id="547fce5a" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Atendimento de Seg à Sex 09h às 19h</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-278d4670 elementor-widget elementor-widget-image" data-id="278d4670" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image">
+											<a href="https://api.whatsapp.com/send?phone=5555992132495&#038;text=Eu%20quero%20saber%20mais%20sobre%20o%20Nicotrin!" target="_blank">
+							<img width="643" height="194" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20643%20194'%3E%3C/svg%3E" class="attachment-large size-large" alt="" data-lazy-srcset="https://nicotrin.com/wp-content/uploads/2022/01/atendimento-pf-1-1-1-1-1.png 643w, https://nicotrin.com/wp-content/uploads/2022/01/atendimento-pf-1-1-1-1-1-300x91.png 300w" data-lazy-sizes="(max-width: 643px) 100vw, 643px" data-lazy-src="https://nicotrin.com/wp-content/uploads/2022/01/atendimento-pf-1-1-1-1-1.png" /><noscript><img width="643" height="194" src="https://nicotrin.com/wp-content/uploads/2022/01/atendimento-pf-1-1-1-1-1.png" class="attachment-large size-large" alt="" srcset="https://nicotrin.com/wp-content/uploads/2022/01/atendimento-pf-1-1-1-1-1.png 643w, https://nicotrin.com/wp-content/uploads/2022/01/atendimento-pf-1-1-1-1-1-300x91.png 300w" sizes="(max-width: 643px) 100vw, 643px" /></noscript>								</a>
+											</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-1745c93f elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="1745c93f" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-4a4b60b" data-id="4a4b60b" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-471b653 elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="471b653" data-element_type="widget" data-widget_type="divider.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-divider">
+			<span class="elementor-divider-separator">
+						</span>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-363c589a elementor-widget elementor-widget-heading" data-id="363c589a" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">DULLAB EMPREENDIMENTOS COMERCIAIS - LTDA
+</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-24390e12 elementor-widget elementor-widget-heading" data-id="24390e12" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">©Copyright 2022. Todos os direitos reservados. <br>
+Informamos que Nicotrin é um tratamento. Seu resultado pode variar de pessoa para pessoa.
+Os preços dos produtos estão sujeitos a alteração sem aviso prévio.
+
+</h2>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-3652a1c4 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="3652a1c4" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-5191010a" data-id="5191010a" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-4948c117 elementor-widget elementor-widget-heading" data-id="4948c117" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default"><span style="color:#EEF900"><b>ATENÇÃO: </b></span>DEVIDO A ALTA DEMANDA, HÁ UMA QUANTIDADE LIMITADA DE NICOTRIN EM ESTOQUE <span style="color:#EEF900"><b>E PODE ACABAR A QUALQUER MOMENTO!</b></span></h2>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+						</div>
+						</div>
+					</div>
+		<script id='backexit-redirect-js-extra'>
+var ber_settings = {"redirectURL":"https:\/\/nicotrin.com\/promocao\/","events":{"back":true,"exit_intent":false}};
+</script>
+<script type="rocketlazyloadscript" data-minify="1" src='https://nicotrin.com/wp-content/cache/min/1/wp-content/plugins/backexit-redirect-master/public/js/ber.js?ver=1646653339' id='backexit-redirect-js' defer></script>
+<script type="rocketlazyloadscript" id='rocket-browser-checker-js-after'>
+"use strict";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||!1,descriptor.configurable=!0,"value"in descriptor&&(descriptor.writable=!0),Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){return protoProps&&defineProperties(Constructor.prototype,protoProps),staticProps&&defineProperties(Constructor,staticProps),Constructor}}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor))throw new TypeError("Cannot call a class as a function")}var RocketBrowserCompatibilityChecker=function(){function RocketBrowserCompatibilityChecker(options){_classCallCheck(this,RocketBrowserCompatibilityChecker),this.passiveSupported=!1,this._checkPassiveOption(this),this.options=!!this.passiveSupported&&options}return _createClass(RocketBrowserCompatibilityChecker,[{key:"_checkPassiveOption",value:function(self){try{var options={get passive(){return!(self.passiveSupported=!0)}};window.addEventListener("test",null,options),window.removeEventListener("test",null,options)}catch(err){self.passiveSupported=!1}}},{key:"initRequestIdleCallback",value:function(){!1 in window&&(window.requestIdleCallback=function(cb){var start=Date.now();return setTimeout(function(){cb({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}),!1 in window&&(window.cancelIdleCallback=function(id){return clearTimeout(id)})}},{key:"isDataSaverModeOn",value:function(){return"connection"in navigator&&!0===navigator.connection.saveData}},{key:"supportsLinkPrefetch",value:function(){var elem=document.createElement("link");return elem.relList&&elem.relList.supports&&elem.relList.supports("prefetch")&&window.IntersectionObserver&&"isIntersecting"in IntersectionObserverEntry.prototype}},{key:"isSlowConnection",value:function(){return"connection"in navigator&&"effectiveType"in navigator.connection&&("2g"===navigator.connection.effectiveType||"slow-2g"===navigator.connection.effectiveType)}}]),RocketBrowserCompatibilityChecker}();
+</script>
+<script id='rocket-preload-links-js-extra'>
+var RocketPreloadLinksConfig = {"excludeUris":"\/(.+\/)?feed\/?.+\/?|\/(?:.+\/)?embed\/|\/(index\\.php\/)?wp\\-json(\/.*|$)|\/wp-admin\/|\/logout\/|\/wp-login.php","usesTrailingSlash":"1","imageExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif","fileExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|php|pdf|html|htm","siteUrl":"https:\/\/nicotrin.com","onHoverDelay":"100","rateThrottle":"3"};
+</script>
+<script type="rocketlazyloadscript" id='rocket-preload-links-js-after'>
+(function() {
+"use strict";var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e=function(){function i(e,t){for(var n=0;n<t.length;n++){var i=t[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}return function(e,t,n){return t&&i(e.prototype,t),n&&i(e,n),e}}();function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var t=function(){function n(e,t){i(this,n),this.browser=e,this.config=t,this.options=this.browser.options,this.prefetched=new Set,this.eventTime=null,this.threshold=1111,this.numOnHover=0}return e(n,[{key:"init",value:function(){!this.browser.supportsLinkPrefetch()||this.browser.isDataSaverModeOn()||this.browser.isSlowConnection()||(this.regex={excludeUris:RegExp(this.config.excludeUris,"i"),images:RegExp(".("+this.config.imageExt+")$","i"),fileExt:RegExp(".("+this.config.fileExt+")$","i")},this._initListeners(this))}},{key:"_initListeners",value:function(e){-1<this.config.onHoverDelay&&document.addEventListener("mouseover",e.listener.bind(e),e.listenerOptions),document.addEventListener("mousedown",e.listener.bind(e),e.listenerOptions),document.addEventListener("touchstart",e.listener.bind(e),e.listenerOptions)}},{key:"listener",value:function(e){var t=e.target.closest("a"),n=this._prepareUrl(t);if(null!==n)switch(e.type){case"mousedown":case"touchstart":this._addPrefetchLink(n);break;case"mouseover":this._earlyPrefetch(t,n,"mouseout")}}},{key:"_earlyPrefetch",value:function(t,e,n){var i=this,r=setTimeout(function(){if(r=null,0===i.numOnHover)setTimeout(function(){return i.numOnHover=0},1e3);else if(i.numOnHover>i.config.rateThrottle)return;i.numOnHover++,i._addPrefetchLink(e)},this.config.onHoverDelay);t.addEventListener(n,function e(){t.removeEventListener(n,e,{passive:!0}),null!==r&&(clearTimeout(r),r=null)},{passive:!0})}},{key:"_addPrefetchLink",value:function(i){return this.prefetched.add(i.href),new Promise(function(e,t){var n=document.createElement("link");n.rel="prefetch",n.href=i.href,n.onload=e,n.onerror=t,document.head.appendChild(n)}).catch(function(){})}},{key:"_prepareUrl",value:function(e){if(null===e||"object"!==(void 0===e?"undefined":r(e))||!1 in e||-1===["http:","https:"].indexOf(e.protocol))return null;var t=e.href.substring(0,this.config.siteUrl.length),n=this._getPathname(e.href,t),i={original:e.href,protocol:e.protocol,origin:t,pathname:n,href:t+n};return this._isLinkOk(i)?i:null}},{key:"_getPathname",value:function(e,t){var n=t?e.substring(this.config.siteUrl.length):e;return n.startsWith("/")||(n="/"+n),this._shouldAddTrailingSlash(n)?n+"/":n}},{key:"_shouldAddTrailingSlash",value:function(e){return this.config.usesTrailingSlash&&!e.endsWith("/")&&!this.regex.fileExt.test(e)}},{key:"_isLinkOk",value:function(e){return null!==e&&"object"===(void 0===e?"undefined":r(e))&&(!this.prefetched.has(e.href)&&e.origin===this.config.siteUrl&&-1===e.href.indexOf("?")&&-1===e.href.indexOf("#")&&!this.regex.excludeUris.test(e.href)&&!this.regex.images.test(e.href))}}],[{key:"run",value:function(){"undefined"!=typeof RocketPreloadLinksConfig&&new n(new RocketBrowserCompatibilityChecker({capture:!0,passive:!0}),RocketPreloadLinksConfig).init()}}]),n}();t.run();
+}());
+</script>
+<script id='sinatra-js-js-extra'>
+var sinatra_vars = {"ajaxurl":"https:\/\/nicotrin.com\/wp-admin\/admin-ajax.php","nonce":"df3ff67549","responsive-breakpoint":"960","sticky-header":{"enabled":false,"hide_on":[""]},"strings":{"comments_toggle_show":"Leave a Comment","comments_toggle_hide":"Hide Comments"}};
+</script>
+<script type="rocketlazyloadscript" src='https://nicotrin.com/wp-content/themes/sinatra/assets/js/sinatra.min.js?ver=1.2.1' id='sinatra-js-js' defer></script>
+<script type="rocketlazyloadscript" src='https://nicotrin.com/wp-content/plugins/elementor/assets/js/frontend-modules.min.js?ver=3.0.14' id='elementor-frontend-modules-js' defer></script>
+<script type="rocketlazyloadscript" src='https://nicotrin.com/wp-content/plugins/elementor-pro/assets/lib/sticky/jquery.sticky.min.js?ver=3.0.8' id='elementor-sticky-js' defer></script>
+<script type="rocketlazyloadscript" id='elementor-pro-frontend-js-before'>
+var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/nicotrin.com\/wp-admin\/admin-ajax.php","nonce":"7eb9532c11","i18n":{"toc_no_headings_found":"No headings were found on this page."},"shareButtonsNetworks":{"facebook":{"title":"Facebook","has_counter":true},"twitter":{"title":"Twitter"},"google":{"title":"Google+","has_counter":true},"linkedin":{"title":"LinkedIn","has_counter":true},"pinterest":{"title":"Pinterest","has_counter":true},"reddit":{"title":"Reddit","has_counter":true},"vk":{"title":"VK","has_counter":true},"odnoklassniki":{"title":"OK","has_counter":true},"tumblr":{"title":"Tumblr"},"digg":{"title":"Digg"},"skype":{"title":"Skype"},"stumbleupon":{"title":"StumbleUpon","has_counter":true},"mix":{"title":"Mix"},"telegram":{"title":"Telegram"},"pocket":{"title":"Pocket","has_counter":true},"xing":{"title":"XING","has_counter":true},"whatsapp":{"title":"WhatsApp"},"email":{"title":"Email"},"print":{"title":"Print"}},"facebook_sdk":{"lang":"en_US","app_id":""},"lottie":{"defaultAnimationUrl":"https:\/\/nicotrin.com\/wp-content\/plugins\/elementor-pro\/modules\/lottie\/assets\/animations\/default.json"}};
+</script>
+<script type="rocketlazyloadscript" src='https://nicotrin.com/wp-content/plugins/elementor-pro/assets/js/frontend.min.js?ver=3.0.8' id='elementor-pro-frontend-js' defer></script>
+<script type="rocketlazyloadscript" src='https://nicotrin.com/wp-includes/js/jquery/ui/core.min.js?ver=1.13.1' id='jquery-ui-core-js' defer></script>
+<script type="rocketlazyloadscript" src='https://nicotrin.com/wp-content/plugins/elementor/assets/lib/dialog/dialog.min.js?ver=4.8.1' id='elementor-dialog-js' defer></script>
+<script type="rocketlazyloadscript" src='https://nicotrin.com/wp-content/plugins/elementor/assets/lib/waypoints/waypoints.min.js?ver=4.0.2' id='elementor-waypoints-js' defer></script>
+<script type="rocketlazyloadscript" src='https://nicotrin.com/wp-content/plugins/elementor/assets/lib/swiper/swiper.min.js?ver=5.3.6' id='swiper-js' defer></script>
+<script type="rocketlazyloadscript" src='https://nicotrin.com/wp-content/plugins/elementor/assets/lib/share-link/share-link.min.js?ver=3.0.14' id='share-link-js' defer></script>
+<script type="rocketlazyloadscript" id='elementor-frontend-js-before'>
+var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false},"i18n":{"shareOnFacebook":"Share on Facebook","shareOnTwitter":"Share on Twitter","pinIt":"Pin it","download":"Download","downloadImage":"Download image","fullscreen":"Fullscreen","zoom":"Zoom","share":"Share","playVideo":"Play Video","previous":"Previous","next":"Next","close":"Close"},"is_rtl":false,"breakpoints":{"xs":0,"sm":480,"md":768,"lg":1025,"xl":1440,"xxl":1600},"version":"3.0.14","is_static":false,"legacyMode":{"elementWrappers":true},"urls":{"assets":"https:\/\/nicotrin.com\/wp-content\/plugins\/elementor\/assets\/"},"settings":{"page":[],"editorPreferences":[]},"kit":{"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","lightbox_enable_share":"yes","lightbox_title_src":"title","lightbox_description_src":"description"},"post":{"id":1070,"title":"NICOTRIN%20%E2%80%93%20SITE%20OFICIAL","excerpt":"","featuredImage":false}};
+</script>
+<script type="rocketlazyloadscript" src='https://nicotrin.com/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.0.14' id='elementor-frontend-js' defer></script>
+	<script type="rocketlazyloadscript">
+	!function(){var e=-1<navigator.userAgent.toLowerCase().indexOf("webkit"),t=-1<navigator.userAgent.toLowerCase().indexOf("opera"),n=-1<navigator.userAgent.toLowerCase().indexOf("msie");(e||t||n)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var e,t=location.hash.substring(1);/^[A-z0-9_-]+$/.test(t)&&(e=document.getElementById(t))&&(/^(?:a|select|input|button|textarea)$/i.test(e.tagName)||(e.tabIndex=-1),e.focus())},!1)}();
+	</script>
+	<script>window.lazyLoadOptions={elements_selector:"img[data-lazy-src],.rocket-lazyload",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}};window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
+if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
+images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
+if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://nicotrin.com/wp-content/plugins/wp-rocket/assets/js/lazyload/16.1/lazyload.min.js"></script>	<script>class RocketElementorAnimation{constructor(){this.deviceMode=document.createElement("span"),this.deviceMode.id="elementor-device-mode",this.deviceMode.setAttribute("class","elementor-screen-only"),document.body.appendChild(this.deviceMode)}_detectAnimations(){let t=getComputedStyle(this.deviceMode,":after").content.replace(/"/g,"");this.animationSettingKeys=this._listAnimationSettingsKeys(t),document.querySelectorAll(".elementor-invisible[data-settings]").forEach(t=>{const e=t.getBoundingClientRect();if(e.bottom>=0&&e.top<=window.innerHeight)try{this._animateElement(t)}catch(t){}})}_animateElement(t){const e=JSON.parse(t.dataset.settings),i=e._animation_delay||e.animation_delay||0,n=e[this.animationSettingKeys.find(t=>e[t])];if("none"===n)return void t.classList.remove("elementor-invisible");t.classList.remove(n),this.currentAnimation&&t.classList.remove(this.currentAnimation),this.currentAnimation=n;let s=setTimeout(()=>{t.classList.remove("elementor-invisible"),t.classList.add("animated",n),this._removeAnimationSettings(t,e)},i);window.addEventListener("rocket-startLoading",function(){clearTimeout(s)})}_listAnimationSettingsKeys(t="mobile"){const e=[""];switch(t){case"mobile":e.unshift("_mobile");case"tablet":e.unshift("_tablet");case"desktop":e.unshift("_desktop")}const i=[];return["animation","_animation"].forEach(t=>{e.forEach(e=>{i.push(t+e)})}),i}_removeAnimationSettings(t,e){this._listAnimationSettingsKeys().forEach(t=>delete e[t]),t.dataset.settings=JSON.stringify(e)}static run(){const t=new RocketElementorAnimation;requestAnimationFrame(t._detectAnimations.bind(t))}}document.addEventListener("DOMContentLoaded",RocketElementorAnimation.run);</script></body>
+</html>
+
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me - Debug: cached@1648640433 -->
